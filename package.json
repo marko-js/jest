@@ -28,7 +28,8 @@
     "typescript": "^3.5.2"
   },
   "files": [
-    "dist"
+    "dist",
+    "jest-preset.js"
   ],
   "homepage": "https://github.com/marko-js/jest",
   "keywords": [
