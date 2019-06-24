@@ -5,7 +5,7 @@
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/jest/issues",
   "dependencies": {
-    "enhanced-resolve-jest": "^1.0.0"
+    "enhanced-resolve-jest": "^1.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
