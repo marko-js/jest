@@ -5,6 +5,7 @@
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/jest/issues",
   "dependencies": {
+    "jest-config": "^24.8.0",
     "enhanced-resolve-jest": "^1.0.1"
   },
   "devDependencies": {
@@ -18,7 +19,6 @@
     "enhanced-resolve": "^4.1.0",
     "husky": "^2.4.1",
     "jest": "^24.8.0",
-    "jest-config": "^24.8.0",
     "lint-staged": "^8.2.1",
     "marko": "^4.17.5",
     "prettier": "^1.18.2",
@@ -40,7 +40,6 @@
   "license": "MIT",
   "main": "dist/index.js",
   "peerDependencies": {
-    "jest-config": "*",
     "marko": "^4"
   },
   "repository": {
