@@ -1,5 +1,6 @@
 <h1 align="center">
   <!-- Logo -->
+  <img width="300" src="https://user-images.githubusercontent.com/1958812/60372848-03980180-99b3-11e9-87c2-0fa76c8b6ff4.png"/>
   <br/>
   @marko/jest
 	<br/>
