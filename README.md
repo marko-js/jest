@@ -67,6 +67,8 @@ module.exports = {
   moduleFileExtensions: defaults.moduleFileExtensions.concat("marko"),
   // preprocesses Marko files.
   transform: { "\\.marko$": "@marko/jest" },
+  // transforms top level `.marko` files in the Marko package.
+  transformIgnorePatterns: ["node_modules/(?!(marko)/)"]
   browser: true
 };
 ```
@@ -93,6 +95,7 @@ You can also get access to the preset configuration manually by importing `@mark
 const markoJest = require("@marko/jest/jest-preset");
 module.exports = {
   transform: markoJest.transform,
+  transformIgnorePatterns: markoJest.transformIgnorePatterns,
   resolver: markoJest.resolver,
   moduleFileExtensions: markoJest.moduleFileExtensions,
   browser: true
@@ -125,6 +128,24 @@ module.exports = {
 ```
 
 In the above example config, any tests with `*.browser.js` will run in a JSDOM context with browser path resolution and Marko's DOM API, those with `*.server.js` will instead be run in a node context with the Marko HTML streaming API.
+
+## Using tags from npm
+
+By default Jest will not transform any `.marko` files within your `node_modules` folder. Marko recommends publishing the original source Marko files when publishing to npm. To get around this you can use the [`transformIgnorePatterns`](https://jestjs.io/docs/en/tutorial-react-native#transformignorepatterns-customization) option in Jest and whitelist any packages which contain Marko tags.
+
+**jest.config.js**
+
+```javascript
+module.exports = {
+  browser: true,
+  preset: "@marko/jest",
+  transformIgnorePatterns: [
+    // `marko` is excluded automatically by the preset.
+    // Here we are also adding `@marko-tags` to allow using https://github.com/marko-js/tags
+    "node_modules/(?!(marko|@marko-tags)/)"
+  ]
+};
+```
 
 ## Why override the resolver (enhanced-resolve-jest)?
 

@@ -8,5 +8,7 @@ module.exports = {
   // preprocesses Marko files.
   transform: {
     "\\.marko$": require.resolve(".")
-  }
+  },
+  // transforms top level `.marko` files in the Marko package.
+  transformIgnorePatterns: ["node_modules/(?!(marko)/)"]
 };
