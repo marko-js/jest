@@ -5,28 +5,31 @@
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/jest/issues",
   "dependencies": {
-    "jest-config": "^24.8.0",
     "enhanced-resolve-jest": "^1.0.2",
+    "escape-string-regexp": "^2.0.0",
+    "jest-config": "^24.8.0",
+    "read-pkg-up": "^6.0.0",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.0.0",
-    "@commitlint/config-conventional": "^8.0.0",
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
     "@jest/transform": "^24.8.0",
     "@types/enhanced-resolve": "^3.0.6",
-    "@types/jest": "^24.0.15",
-    "@types/node": "^12.0.8",
-    "coveralls": "^3.0.4",
+    "@types/jest": "^24.0.17",
+    "@types/node": "^12.7.1",
+    "coveralls": "^3.0.6",
     "enhanced-resolve": "^4.1.0",
-    "husky": "^2.4.1",
+    "husky": "^3.0.3",
     "jest": "^24.8.0",
-    "lint-staged": "^8.2.1",
+    "lint-staged": "^9.2.1",
     "marko": "^4.17.5",
     "prettier": "^1.18.2",
+    "standard-version": "^7.0.0",
     "ts-jest": "^24.0.2",
-    "tslint": "^5.17.0",
+    "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   },
   "files": [
     "dist",
@@ -53,6 +56,7 @@
     "ci:test": "npm run test -- --coverage",
     "format": "prettier \"**/*.{json,md,js,ts}\" --write",
     "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json '{src,test}/**/*.ts'",
+    "release": "standard-version",
     "test": "jest"
   },
   "types": "dist/index.d.ts"
