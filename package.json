@@ -56,6 +56,7 @@
     "ci:test": "npm run test -- --coverage",
     "format": "prettier \"**/*.{json,md,js,ts}\" --write",
     "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json '{src,test}/**/*.ts'",
+    "prepublishOnly": "npm run build",
     "release": "standard-version",
     "test": "jest"
   },
