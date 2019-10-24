@@ -44,7 +44,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "peerDependencies": {
-    "marko": "^4"
+    "marko": "^3 || ^4"
   },
   "repository": {
     "type": "git",

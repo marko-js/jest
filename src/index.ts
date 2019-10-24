@@ -23,14 +23,15 @@ export = {
       .digest("hex");
   },
   process(src, filename, config) {
-    return compiler[config.browser ? "compileForBrowser" : "compile"](
-      src,
-      filename,
-      {
-        requireTemplates: true,
-        sourceOnly: true
-      }
-    );
+    return compiler[
+      config.browser &&
+      compiler.compileForBrowser /** Only Marko 4 supports compileForBrowser, otherwise use compile */
+        ? "compileForBrowser"
+        : "compile"
+    ](src, filename, {
+      requireTemplates: true,
+      sourceOnly: true
+    });
   },
   canInstrument: false
 } as Transformer;
