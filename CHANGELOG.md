@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/marko-js/jest/compare/v2.0.1...v2.1.0) (2019-10-24)
+
+
+### Features
+
+* add support for Marko 3 ([8c7f5e6](https://github.com/marko-js/jest/commit/8c7f5e6))
+
 ### [2.0.1](https://github.com/marko-js/jest/compare/v2.0.0...v2.0.1) (2019-08-12)
 
 
