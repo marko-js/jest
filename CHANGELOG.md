@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/marko-js/jest/compare/v2.2.0...v2.2.1) (2020-04-10)
+
+
+### Bug Fixes
+
+* simplify transformIgnorePatterns & ensure .marko files get transformed ([#4](https://github.com/marko-js/jest/issues/4)) ([993b466](https://github.com/marko-js/jest/commit/993b466))
+
 ## [2.2.0](https://github.com/marko-js/jest/compare/v2.1.0...v2.2.0) (2020-03-11)
 
 
