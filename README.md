@@ -131,16 +131,16 @@ In the above example config, any tests with `*.browser.js` will run in a JSDOM c
 
 ## Using tags from npm
 
-By default Jest will not transform any `.marko` files within your `node_modules` folder. Marko recommends publishing the original source Marko files when publishing to npm. To get around this you can use the [`transformIgnorePatterns`](https://jestjs.io/docs/en/tutorial-react-native#transformignorepatterns-customization) option in Jest and whitelist any packages which contain Marko tags.
+By default Jest will not transform any `.marko` files within your `node_modules` folder. Marko recommends publishing the original source Marko files when publishing to npm. To get around this you can use the [`transformIgnorePatterns`](https://jestjs.io/docs/en/tutorial-react-native#transformignorepatterns-customization) option in Jest and whitelist `.marko` files.
 
-The `@marko/jest` preset by will scan your `node_modules` and build the appropriate ignore pattern for you. If you are just using the `@marko/jest` transformer standalone then you will have to do this yourself, like so:
+The `@marko/jest` preset sets the ignore pattern for you. If you are just using the `@marko/jest` transformer standalone then you will have to do this yourself, like so:
 
 **jest.config.js**
 
 ```javascript
 module.exports = {
   ...,
-  transformIgnorePatterns: ["node_modules/(?!(marko|@marko-tags|another-package-with-marko-tags)/)"]
+  transformIgnorePatterns: ["node_modules/.*(?<!\\.marko)$"]
 };
 ```
 

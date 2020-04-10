@@ -6,9 +6,7 @@
   "bugs": "https://github.com/marko-js/jest/issues",
   "dependencies": {
     "enhanced-resolve-jest": "^1.0.2",
-    "escape-string-regexp": "^2.0.0",
     "jest-config": "^24.8.0",
-    "read-pkg-up": "^6.0.0",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
