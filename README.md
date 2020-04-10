@@ -67,8 +67,8 @@ module.exports = {
   moduleFileExtensions: defaults.moduleFileExtensions.concat("marko"),
   // preprocesses Marko files.
   transform: { "\\.marko$": "@marko/jest" },
-  // transforms top level `.marko` files in the Marko package.
-  transformIgnorePatterns: ["node_modules/(?!(marko)/)"]
+  // transforms `.marko` files in node_modules as well
+  transformIgnorePatterns: ["node_modules/.*(?<!\\.marko)$"]
   browser: true
 };
 ```
