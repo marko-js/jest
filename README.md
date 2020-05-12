@@ -144,6 +144,13 @@ module.exports = {
 };
 ```
 
+## Including `style` files
+
+Since jest is uses JSDOM, which has limited support for stylesheets, including styles in the page often does not add a ton of value. However in some cases it can be useful to include these styles, for example with [visual-html](https://github.com/ebay/visual-html) or [jsdom-screenshot](https://github.com/dferber90/jsdom-screenshot).
+
+This plugin will automatically include any Marko dependencies, including style files, if an appropriate jest transform is available.
+To have Marko include a `style.css` file you could add [jest-transform-css](https://github.com/dferber90/jest-transform-css) to your `jest.config.js`.
+
 ## Why override the resolver (enhanced-resolve-jest)?
 
 The default jest resolver does actually work fine with Marko when running server side tests, however in the browser they rely on [browser-resolve](https://github.com/shtylman/node-browser-resolve#readme). The browser resolver then relies on a version of [resolve](https://github.com/browserify/resolve) which is over three years old and has had many fixes since.

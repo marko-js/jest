@@ -5,6 +5,7 @@
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/jest/issues",
   "dependencies": {
+    "concat-with-sourcemaps": "^1.1.0",
     "enhanced-resolve-jest": "^1.0.2",
     "jest-config": "^24.8.0",
     "tslib": "^1.10.0"
@@ -20,6 +21,7 @@
     "enhanced-resolve": "^4.1.0",
     "husky": "^3.0.3",
     "jest": "^24.8.0",
+    "jest-transform-css": "^2.0.0",
     "lint-staged": "^9.2.1",
     "marko": "^4.17.5",
     "prettier": "^1.18.2",
