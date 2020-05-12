@@ -1,7 +1,8 @@
 const base = {
   preset: "./jest-preset",
   transform: {
-    "\\.ts$": "ts-jest"
+    "\\.ts$": "ts-jest",
+    "\\.css$": "jest-transform-css"
   }
 };
 
