@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/marko-js/jest/compare/v2.2.1...v3.0.0) (2020-05-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* Previously this plugin would never include browser dependencies including  files.
+
+### Features
+
+* includes browser deps if supported transform enabled ([01db282](https://github.com/marko-js/jest/commit/01db282))
+
 ### [2.2.1](https://github.com/marko-js/jest/compare/v2.2.0...v2.2.1) (2020-04-10)
 
 
