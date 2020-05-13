@@ -6,7 +6,7 @@ import ConcatMap from "concat-with-sourcemaps";
 import { Transformer } from "@jest/transform";
 const THIS_FILE = fs.readFileSync(__filename);
 
-export = {
+export = ({ browser }: { browser: boolean }) => ({
   getCacheKey(fileData, filename, configString, { instrument, rootDir }) {
     return crypto
       .createHash("md5")
@@ -25,7 +25,7 @@ export = {
   },
   process(src, filename, config) {
     const result = compiler[
-      config.browser &&
+      (browser || config.browser) &&
       compiler.compileForBrowser /** Only Marko 4 supports compileForBrowser, otherwise use compile */
         ? "compileForBrowser"
         : "compile"
@@ -98,4 +98,4 @@ export = {
     };
   },
   canInstrument: false
-} as Transformer;
+} as Transformer);
