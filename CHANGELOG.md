@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/marko-js/jest/compare/v3.0.0...v3.1.0) (2020-05-13)
+
+
+### Features
+
+* add support for jest 26, log warnings with legacy configs ([46ef443](https://github.com/marko-js/jest/commit/46ef443))
+
 ## [3.0.0](https://github.com/marko-js/jest/compare/v2.2.1...v3.0.0) (2020-05-12)
 
 

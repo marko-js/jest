@@ -1,7 +1,7 @@
 {
   "name": "@marko/jest",
   "description": "A preprocessor and preset to use Marko with Jest",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/jest/issues",
   "dependencies": {
