@@ -10,7 +10,8 @@
 npm-debug.log
 
 # Build
-dist
+/transform
+/preset
 
 # Coverage
 coverage

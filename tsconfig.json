@@ -3,7 +3,7 @@
     "lib": ["dom", "es2015", "scripthost"],
     "pretty": true,
     "target": "es5",
-    "outDir": "./dist",
+    "outDir": ".",
     "sourceMap": true,
     "declaration": true,
     "stripInternal": true,
@@ -14,5 +14,6 @@
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "exclude": []
 }

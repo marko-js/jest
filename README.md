@@ -50,26 +50,24 @@ npm install @marko/jest -D
 
 ```javascript
 module.exports = {
-  preset: "@marko/jest",
-  browser: true
+  preset: "@marko/jest/preset/browser"
 };
 ```
 
-The above is equivalent to:
+The above is roughly equivalent to:
 
 ```javascript
 const { defaults } = require("jest-config");
 
 module.exports = {
-  // uses a webpack style resolver, the default one has many issues.
-  resolver: "enhanced-resolve-jest",
+  // uses a webpack style resolver
+  resolver: "...",
   // allows for stuff like file watching of `.marko` files
   moduleFileExtensions: defaults.moduleFileExtensions.concat("marko"),
   // preprocesses Marko files.
-  transform: { "\\.marko$": "@marko/jest" },
+  transform: { "\\.marko$": "@marko/jest/transform/browser" },
   // transforms `.marko` files in node_modules as well
-  transformIgnorePatterns: ["node_modules/.*(?<!\\.marko)$"]
-  browser: true
+  transformIgnorePatterns: ["node_modules/.*(?<!\\.marko)$"
 };
 ```
 
@@ -81,18 +79,17 @@ Jest presets are extensible by default, meaning you should be able to continue t
 
 ```javascript
 module.exports = {
-  preset: "@marko/jest",
+  preset: "@marko/jest/preset/browser",
   transform: {
     "\\.ts$": "ts-jest"
-  },
-  browser: true
+  }
 };
 ```
 
-You can also get access to the preset configuration manually by importing `@marko/jest/jest-preset` and use it like so:
+You can also get access to the preset configuration manually by importing `@marko/jest/preset/browser/jest-preset` and use it like so:
 
 ```javascript
-const markoJest = require("@marko/jest/jest-preset");
+const markoJest = require("@marko/jest/preset/browser/jest-preset");
 module.exports = {
   transform: markoJest.transform,
   transformIgnorePatterns: markoJest.transformIgnorePatterns,
@@ -104,7 +101,7 @@ module.exports = {
 
 ## Test both server & browser
 
-The above configurations all set `browser: true`, for many Marko projects you may have a mix of server and browser components. You can test all of these with Jest by using the [projects configuration](https://jestjs.io/docs/en/configuration#projects-array-string-projectconfig) [like this project does](./blob/master/jest.config.js)!
+For many Marko projects you may have a mix of server and browser components. You can test all of these with Jest by using the [projects configuration](https://jestjs.io/docs/en/configuration#projects-array-string-projectconfig) [like this project does](./blob/master/jest.config.js)! Simply make sure to use `@marko/jest/preset/node` and `@marko/jest/preset/browser` according to the test environment.
 
 **jest.config.js**
 
@@ -113,14 +110,12 @@ module.exports = {
   projects: [
     {
       displayName: "browser",
-      preset: "@marko/jest",
-      browser: true,
+      preset: "@marko/jest/preset/browser",
       testMatch: ["**/__tests__/**/*.browser.js"]
     },
     {
       displayName: "server",
-      preset: "@marko/jest",
-      testEnvironment: "node",
+      preset: "@marko/jest/preset/node",
       testMatch: ["**/__tests__/**/*.server.js"]
     }
   ]
@@ -133,7 +128,7 @@ In the above example config, any tests with `*.browser.js` will run in a JSDOM c
 
 By default Jest will not transform any `.marko` files within your `node_modules` folder. Marko recommends publishing the original source Marko files when publishing to npm. To get around this you can use the [`transformIgnorePatterns`](https://jestjs.io/docs/en/tutorial-react-native#transformignorepatterns-customization) option in Jest and whitelist `.marko` files.
 
-The `@marko/jest` preset sets the ignore pattern for you. If you are just using the `@marko/jest` transformer standalone then you will have to do this yourself, like so:
+The `@marko/jest/preset/*` helpers set the ignore pattern for you. If you are using the `@marko/jest/transform/*` directly then you will have to do this yourself, like so:
 
 **jest.config.js**
 
