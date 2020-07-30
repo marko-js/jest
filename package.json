@@ -45,7 +45,7 @@
   "license": "MIT",
   "main": "transform/node.js",
   "peerDependencies": {
-    "marko": "^3 || ^4"
+    "marko": "^3 || ^4 || ^5"
   },
   "repository": {
     "type": "git",
