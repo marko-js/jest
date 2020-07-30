@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/marko-js/jest/compare/v3.1.1...v3.2.0) (2020-07-30)
+
+
+### Features
+
+* add Marko 5 as supported peerDependency ([0471e88](https://github.com/marko-js/jest/commit/0471e88))
+
 ### [3.1.1](https://github.com/marko-js/jest/compare/v3.1.0...v3.1.1) (2020-06-04)
 
 
