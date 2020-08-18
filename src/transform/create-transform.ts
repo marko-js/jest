@@ -5,6 +5,14 @@ import compiler from "marko/compiler";
 import ConcatMap from "concat-with-sourcemaps";
 import { Transformer } from "@jest/transform";
 const THIS_FILE = fs.readFileSync(__filename);
+const MARKO_OPTIONS = {
+  writeVersionComment: false,
+  requireTemplates: true,
+  writeToDisk: false,
+  sourceOnly: false,
+  sourceMaps: true,
+  modules: "cjs"
+};
 
 export = ({ browser }: { browser: boolean }) =>
   ({
@@ -30,13 +38,7 @@ export = ({ browser }: { browser: boolean }) =>
         compiler.compileForBrowser /** Only Marko 4 supports compileForBrowser, otherwise use compile */
           ? "compileForBrowser"
           : "compile"
-      ](src, filename, {
-        writeVersionComment: false,
-        requireTemplates: true,
-        writeToDisk: false,
-        sourceOnly: false,
-        sourceMaps: true
-      });
+      ](src, filename, MARKO_OPTIONS);
 
       let code = typeof result === "string" ? result : result.code; // Marko 3 does not support sourceOnly: false
       let map = result.map;
