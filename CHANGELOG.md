@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.1](https://github.com/marko-js/jest/compare/v3.2.0...v3.2.1) (2020-08-18)
+
+
+### Bug Fixes
+
+* prefer cjs output in Marko 5 ([44cd2fd](https://github.com/marko-js/jest/commit/44cd2fd))
+
 ## [3.2.0](https://github.com/marko-js/jest/compare/v3.1.1...v3.2.0) (2020-07-30)
 
 
