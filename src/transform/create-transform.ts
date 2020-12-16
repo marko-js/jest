@@ -14,6 +14,11 @@ const MARKO_OPTIONS = {
   modules: "cjs"
 };
 
+// Allows for resolving `.marko` files during compilation.
+if (!(".marko" in require.extensions)) {
+  (require.extensions as any)[".marko"] = undefined;
+}
+
 export = ({ browser }: { browser: boolean }) =>
   ({
     getCacheKey(fileData, filename, configString, { instrument, rootDir }) {
