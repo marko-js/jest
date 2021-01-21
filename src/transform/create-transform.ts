@@ -64,7 +64,7 @@ export = ({ browser }: { browser: boolean }) =>
               let depCode = dep.code;
 
               if (!acceptedMatch) {
-                return;
+                continue;
               }
 
               for (const key in acceptedMatch.groups) {
