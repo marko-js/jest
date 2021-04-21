@@ -43,6 +43,11 @@ Templates are automatically compiled for the correct environment based on your J
 ```console
 npm install @marko/jest -D
 ```
+or
+```console
+yarn add @marko/jest -D
+```
+
 
 # Examples
 
