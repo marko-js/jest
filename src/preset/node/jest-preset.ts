@@ -1,12 +1,11 @@
-import sharedPreset from "../shared-preset";
+import common from "../common";
 
 export = {
-  ...sharedPreset,
-  // avoid loading jsdom.
+  ...common,
   testEnvironment: "node",
   // preprocesses Marko files.
   transform: {
     "\\.marko$": require.resolve("../../transform/node"),
-    ...sharedPreset.transform
-  }
+    ...common.transform,
+  },
 };

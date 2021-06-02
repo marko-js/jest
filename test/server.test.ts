@@ -17,6 +17,6 @@ test("can be mocked", async () => {
 
 test("transforms templates in node_modules", () => {
   expect(Project.renderSync({}).toString()).toMatchInlineSnapshot(
-    `"<div class=\\"direct\\"><div class=\\"indirect\\">Hello World</div></div>"`
+    `"<div class=direct><div class=indirect>Hello World</div></div>"`
   );
 });
