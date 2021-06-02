@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1](https://github.com/marko-js/jest/compare/v4.0.0...v4.0.1) (2021-06-02)
+
+
+### Bug Fixes
+
+* issue with .d.ts missing ([fb5e258](https://github.com/marko-js/jest/commit/fb5e2586360bf691eee57499bb66be9974742aff))
+
 ## [4.0.0](https://github.com/marko-js/jest/compare/v3.2.3...v4.0.0) (2021-06-02)
 
 
