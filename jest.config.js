@@ -1,24 +1,21 @@
-const base = {
+const common = {
   transform: {
-    "\\.ts$": "ts-jest",
-    "\\.css$": "jest-transform-css"
-  }
+    "\\.ts$": "esbuild-jest",
+    "\\.css$": "jest-transform-css",
+  },
 };
 
 module.exports = {
   projects: [
     {
-      ...base,
-      preset: "./preset/node/jest-preset.js",
-      displayName: "node",
-      testEnvironment: "node",
-      testMatch: ["<rootDir>/test/server.test.ts"]
+      ...common,
+      preset: "./src/preset/node/jest-preset.ts",
+      testMatch: ["<rootDir>/test/server.test.ts"],
     },
     {
-      ...base,
-      preset: "./preset/browser/jest-preset.js",
-      displayName: "browser",
-      testMatch: ["<rootDir>/test/browser.test.ts"]
-    }
-  ]
+      ...common,
+      preset: "./src/preset/browser/jest-preset.ts",
+      testMatch: ["<rootDir>/test/browser.test.ts"],
+    },
+  ],
 };

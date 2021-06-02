@@ -43,11 +43,12 @@ Templates are automatically compiled for the correct environment based on your J
 ```console
 npm install @marko/jest -D
 ```
+
 or
+
 ```console
 yarn add @marko/jest -D
 ```
-
 
 # Examples
 
@@ -55,7 +56,7 @@ yarn add @marko/jest -D
 
 ```javascript
 module.exports = {
-  preset: "@marko/jest/preset/browser"
+  preset: "@marko/jest/preset/browser",
 };
 ```
 
@@ -86,8 +87,8 @@ Jest presets are extensible by default, meaning you should be able to continue t
 module.exports = {
   preset: "@marko/jest/preset/browser",
   transform: {
-    "\\.ts$": "ts-jest"
-  }
+    "\\.ts$": "ts-jest",
+  },
 };
 ```
 
@@ -96,11 +97,11 @@ You can also get access to the preset configuration manually by importing `@mark
 ```javascript
 const markoJest = require("@marko/jest/preset/browser/jest-preset");
 module.exports = {
-  transform: markoJest.transform,
-  transformIgnorePatterns: markoJest.transformIgnorePatterns,
   resolver: markoJest.resolver,
+  transform: markoJest.transform,
+  testEnvironment: markoJest.testEnvironment,
   moduleFileExtensions: markoJest.moduleFileExtensions,
-  browser: true
+  transformIgnorePatterns: markoJest.transformIgnorePatterns,
 };
 ```
 
@@ -116,14 +117,14 @@ module.exports = {
     {
       displayName: "browser",
       preset: "@marko/jest/preset/browser",
-      testMatch: ["**/__tests__/**/*.browser.js"]
+      testMatch: ["**/__tests__/**/*.browser.js"],
     },
     {
       displayName: "server",
       preset: "@marko/jest/preset/node",
-      testMatch: ["**/__tests__/**/*.server.js"]
-    }
-  ]
+      testMatch: ["**/__tests__/**/*.server.js"],
+    },
+  ],
 };
 ```
 

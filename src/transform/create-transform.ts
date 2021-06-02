@@ -2,8 +2,9 @@ import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 import compiler from "marko/compiler";
+import mergeMaps from "merge-source-map";
 import ConcatMap from "concat-with-sourcemaps";
-import { Transformer } from "@jest/transform";
+import type { Transformer } from "@jest/transform";
 const THIS_FILE = fs.readFileSync(__filename);
 const MARKO_OPTIONS = {
   writeVersionComment: false,
@@ -11,7 +12,7 @@ const MARKO_OPTIONS = {
   writeToDisk: false,
   sourceOnly: false,
   sourceMaps: true,
-  modules: "cjs"
+  modules: "cjs",
 };
 
 // Allows for resolving `.marko` files during compilation.
@@ -19,27 +20,38 @@ if (!(".marko" in require.extensions)) {
   (require.extensions as any)[".marko"] = undefined;
 }
 
-export = ({ browser }: { browser: boolean }) =>
-  ({
-    getCacheKey(fileData, filename, configString, { instrument, rootDir }) {
+export default ({ browser }: { browser: boolean }) => {
+  const transformer: Transformer = {
+    getCacheKey(
+      sourceText,
+      sourcePath,
+      transformOptions,
+      config = transformOptions.config
+    ) {
       return crypto
         .createHash("md5")
+        .setEncoding("utf-8")
         .update(THIS_FILE)
-        .update("\0", "utf8")
-        .update(configString)
-        .update("\0", "utf8")
-        .update(fileData)
-        .update("\0", "utf8")
-        .update(path.relative(rootDir, filename))
-        .update("\0", "utf8")
-        .update(instrument ? "instrument" : "")
-        .update("\0", "utf8")
+        .update("\0")
+        .update(sourceText)
+        .update("\0")
+        .update(path.relative(config.rootDir, sourcePath))
+        .update("\0")
+        .update(
+          transformOptions.instrument || (config as any).instrument
+            ? "instrument"
+            : ""
+        )
+        .update("\0")
         .update(process.env.NODE_ENV || "")
+        .update("\0")
+        .update(process.env.MARKO_DEBUG || "")
         .digest("hex");
     },
-    process(src, filename, config) {
+    process(src, filename, transformOptions) {
+      const config = transformOptions.config || transformOptions;
       const result = compiler[
-        (browser || config.browser) &&
+        (browser || (config as any).browser) &&
         compiler.compileForBrowser /** Only Marko 4 supports compileForBrowser, otherwise use compile */
           ? "compileForBrowser"
           : "compile"
@@ -47,9 +59,9 @@ export = ({ browser }: { browser: boolean }) =>
 
       let code = typeof result === "string" ? result : result.code; // Marko 3 does not support sourceOnly: false
       let map = result.map;
-      const deps = result.meta && result.meta.deps;
+      const deps = browser && result.meta && result.meta.deps;
 
-      if (deps) {
+      if (deps && deps.length) {
         const concatMap = new ConcatMap(true, "", ";");
         const acceptPathReg = new RegExp(
           `^(?:[./]*[^:.]*|[^:]+(?:${config.transform
@@ -62,6 +74,7 @@ export = ({ browser }: { browser: boolean }) =>
             if (dep.virtualPath) {
               const acceptedMatch = acceptPathReg.exec(dep.virtualPath);
               let depCode = dep.code;
+              let depMap = dep.map;
 
               if (!acceptedMatch) {
                 continue;
@@ -69,17 +82,26 @@ export = ({ browser }: { browser: boolean }) =>
 
               for (const key in acceptedMatch.groups) {
                 if (acceptedMatch.groups[key] !== undefined) {
+                  // eslint-disable-next-line @typescript-eslint/no-var-requires
                   const transformResult = require(config.transform[
-                    key.slice(1)
-                  ][1]).process(depCode, dep.virtualPath, config);
-                  depCode = transformResult.code || transformResult; // TODO: support sourcemaps for this.
+                    parseInt(key.slice(1), 10)
+                  ][1]).process(depCode, dep.virtualPath, transformOptions);
+
+                  if (typeof transformResult === "object") {
+                    depCode = transformResult.code;
+                    depMap = depMap
+                      ? mergeMaps(depMap, transformResult.map)
+                      : undefined;
+                  } else {
+                    depCode = transformResult;
+                    depMap = undefined;
+                  }
                 }
               }
 
-              concatMap.add(
-                dep.virtualPath,
-                `((module, exports) => {${depCode}})({ exports: {} })`
-              );
+              concatMap.add(null, `((module, exports) => {`);
+              concatMap.add(dep.virtualPath, depCode, depMap);
+              concatMap.add(null, `})({ exports: {} })`);
               continue;
             } else {
               dep = dep.path;
@@ -102,8 +124,10 @@ export = ({ browser }: { browser: boolean }) =>
 
       return {
         code,
-        map
+        map,
       };
     },
-    canInstrument: false
-  } as Transformer);
+  };
+
+  return transformer;
+};

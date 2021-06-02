@@ -10,12 +10,9 @@
 npm-debug.log
 
 # Build
-/transform
-/preset
+dist
+*.tsbuildinfo
 
 # Coverage
 coverage
 .nyc_output
-
-# Test
-*.actual.*
