@@ -1,10 +1,7 @@
-const fs = require("fs");
 const glob = require("tiny-glob");
 const { build } = require("esbuild");
 
 (async () => {
-  await fs.promises.rmdir("dist", { recursive: true }).catch(() => {});
-
   // Ideally we'd use the same bundling / codesplitting as esm for cjs,
   // but thats not yet possible with esbuild, so we manually build each file.
   // https://github.com/evanw/esbuild/issues/1341
