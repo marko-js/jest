@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/marko-js/jest/compare/v3.2.3...v4.0.0) (2021-06-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for using @marko/jest as a preset which was deprecated (use @marko/preset/browser or @marko/preset/node)
+* drop support node 12
+* drop support for using @marko/jest as a preset which was deprecated (use @marko/preset/browser or @marko/preset/node)
+* drop support node 12
+
+### Features
+
+* add support for jest 27 ([44f1213](https://github.com/marko-js/jest/commit/44f12136c17705cc8966b6ad70f986821d204582))
+
+
+* Merge pull request #13 from marko-js/modernize ([24130fe](https://github.com/marko-js/jest/commit/24130fe3e553e6c7d63960c14ece6695c1f4989b)), closes [#13](https://github.com/marko-js/jest/issues/13)
+
 ### [3.2.3](https://github.com/marko-js/jest/compare/v3.2.2...v3.2.3) (2021-01-21)
 
 
