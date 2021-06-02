@@ -22,8 +22,8 @@
   <img src="https://img.shields.io/travis/marko-js/jest.svg" alt="Build status"/>
   </a>
   <!-- Coverage -->
-  <a href="https://coveralls.io/github/marko-js/jest">
-    <img src="https://img.shields.io/coveralls/marko-js/jest.svg" alt="Test Coverage"/>
+  <a href="https://codecov.io/gh/marko-js/jest">
+    <img src="https://codecov.io/gh/marko-js/jest/branch/master/graph/badge.svg?token=0WMSNt10pv" alt="Test Coverage"/>
   </a>
   <!-- NPM Version -->
   <a href="https://npmjs.org/package/@marko/jest">
