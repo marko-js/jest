@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://github.com/marko-js/jest/compare/v4.0.1...v4.0.2) (2021-06-03)
+
+
+### Bug Fixes
+
+* prefer inline sourcemaps which better support debugging ([c51aff7](https://github.com/marko-js/jest/commit/c51aff71705c170cbbb1373483df4cea7f9b40d3))
+
 ### [4.0.1](https://github.com/marko-js/jest/compare/v4.0.0...v4.0.1) (2021-06-02)
 
 
