@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
+import { Buffer } from "buffer";
 import compiler from "marko/compiler";
 import mergeMaps from "merge-source-map";
 import ConcatMap from "concat-with-sourcemaps";
@@ -118,14 +119,13 @@ export default ({ browser }: { browser: boolean }) => {
         map = concatMap.sourceMap;
       }
 
-      if (!map) {
-        return code;
+      if (map) {
+        code += `\n//# sourceMappingURL=data:application/json;base64,${Buffer.from(
+          typeof map === "string" ? map : JSON.stringify(map)
+        ).toString("base64")}`;
       }
 
-      return {
-        code,
-        map,
-      };
+      return code;
     },
   };
 
