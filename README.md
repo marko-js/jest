@@ -119,10 +119,10 @@ module.exports = {
     marko: {
       ignoreUnrecognizedTags: true,
       taglib: {
-        excludePackages: ["@scope/package-name"]
-      }
-    }
-  }
+        excludePackages: ["@scope/package-name"],
+      },
+    },
+  },
 };
 ```
 
