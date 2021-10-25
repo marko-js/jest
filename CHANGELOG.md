@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/marko-js/jest/compare/v4.0.2...v4.1.0) (2021-10-25)
+
+
+### Features
+
+* expose a way to ignore tags and customize Marko config ([616674c](https://github.com/marko-js/jest/commit/616674cb862d991d9d7d70e1e46589eb4c0d427d))
+
 ### [4.0.2](https://github.com/marko-js/jest/compare/v4.0.1...v4.0.2) (2021-06-03)
 
 
