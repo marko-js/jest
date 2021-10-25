@@ -105,6 +105,27 @@ module.exports = {
 };
 ```
 
+## Customizing the Marko compiler
+
+You can override the default [Marko compiler options](https://markojs.com/docs/compiler/#options) by adding a Jest "globals" config with a `marko` property.
+An additional `taglib` property can be set which supports an `excludeDirs` and `excludePackages` array which will prevent Marko from discovering taglibs in a directory or package respectively.
+
+**jest.config.js**
+
+```javascript
+module.exports = {
+  preset: "@marko/jest/preset/browser",
+  globals: {
+    marko: {
+      ignoreUnrecognizedTags: true,
+      taglib: {
+        excludePackages: ["@scope/package-name"]
+      }
+    }
+  }
+};
+```
+
 ## Test both server & browser
 
 For many Marko projects you may have a mix of server and browser components. You can test all of these with Jest by using the [projects configuration](https://jestjs.io/docs/en/configuration#projects-array-string-projectconfig) [like this project does](./blob/master/jest.config.js)! Simply make sure to use `@marko/jest/preset/node` and `@marko/jest/preset/browser` according to the test environment.

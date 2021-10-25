@@ -7,7 +7,7 @@ import mergeMaps from "merge-source-map";
 import ConcatMap from "concat-with-sourcemaps";
 import type { Transformer } from "@jest/transform";
 const THIS_FILE = fs.readFileSync(__filename);
-const MARKO_OPTIONS = {
+const MARKO_OPTIONS: Record<string, any> = {
   writeVersionComment: false,
   requireTemplates: true,
   writeToDisk: false,
@@ -15,6 +15,7 @@ const MARKO_OPTIONS = {
   sourceMaps: true,
   modules: "cjs",
 };
+let configuredGlobals = false;
 
 // Allows for resolving `.marko` files during compilation.
 if (!(".marko" in require.extensions)) {
@@ -51,6 +52,35 @@ export default ({ browser }: { browser: boolean }) => {
     },
     process(src, filename, transformOptions) {
       const config = transformOptions.config || transformOptions;
+      const markoConfig = config.globals.marko as any;
+
+      if (!configuredGlobals && markoConfig) {
+        configuredGlobals = true;
+
+        for (const key in markoConfig) {
+          if (key !== "taglib") {
+            MARKO_OPTIONS[key] = markoConfig[key];
+          }
+        }
+
+        const taglibConfig = markoConfig.taglib;
+        if (taglibConfig) {
+          const excludeDirs = taglibConfig.excludeDirs;
+          if (excludeDirs) {
+            for (const name of excludeDirs) {
+              compiler.taglibFinder.excludeDir(name);
+            }
+          }
+
+          const excludePackages = taglibConfig.excludePackages;
+          if (excludePackages) {
+            for (const name of excludePackages) {
+              compiler.taglibFinder.excludePackage(name);
+            }
+          }
+        }
+      }
+
       const result = compiler[
         (browser || (config as any).browser) &&
         compiler.compileForBrowser /** Only Marko 4 supports compileForBrowser, otherwise use compile */
