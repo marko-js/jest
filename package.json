@@ -7,7 +7,6 @@
   "dependencies": {
     "concat-with-sourcemaps": "^1.1.0",
     "enhanced-resolve-jest": "^1.1.0",
-    "jest-config": "^27.0.3",
     "merge-source-map": "^1.1.0"
   },
   "devDependencies": {
@@ -30,6 +29,7 @@
     "fixpack": "^4.0.0",
     "husky": "^6.0.0",
     "jest": "^26.6.3",
+    "jest-config": "^26.6.3",
     "jest-transform-css": "^2.1.0",
     "lint-staged": "^11.0.0",
     "marko": "^5.10.4",
@@ -52,6 +52,9 @@
   ],
   "license": "MIT",
   "main": "transform/node.js",
+  "peerDependencies": {
+    "jest-config": "23 - 27"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/marko-js/jest"
