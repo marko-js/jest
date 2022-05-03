@@ -53,7 +53,7 @@
   "license": "MIT",
   "main": "transform/node.js",
   "peerDependencies": {
-    "jest-config": "23 - 27"
+    "jest-config": "23 - 28"
   },
   "repository": {
     "type": "git",
