@@ -155,7 +155,7 @@ export default ({ browser }: { browser: boolean }) => {
         ).toString("base64")}`;
       }
 
-      return code;
+      return { code };
     },
   };
 
