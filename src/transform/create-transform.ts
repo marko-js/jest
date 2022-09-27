@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 import { Buffer } from "buffer";
-import compiler from "marko/compiler";
+import compiler from "@marko/compiler";
 import mergeMaps from "merge-source-map";
 import ConcatMap from "concat-with-sourcemaps";
 import type { Transformer } from "@jest/transform";
@@ -68,28 +68,22 @@ export default ({ browser }: { browser: boolean }) => {
           const excludeDirs = taglibConfig.excludeDirs;
           if (excludeDirs) {
             for (const name of excludeDirs) {
-              compiler.taglibFinder.excludeDir(name);
+              compiler.taglib.excludeDir(name);
             }
           }
 
           const excludePackages = taglibConfig.excludePackages;
           if (excludePackages) {
             for (const name of excludePackages) {
-              compiler.taglibFinder.excludePackage(name);
+              compiler.taglib.excludePackage(name);
             }
           }
         }
       }
 
-      const result = compiler[
-        (browser || (config as any).browser) &&
-        compiler.compileForBrowser /** Only Marko 4 supports compileForBrowser, otherwise use compile */
-          ? "compileForBrowser"
-          : "compile"
-      ](src, filename, MARKO_OPTIONS);
-
+      const result = compiler.compileSync(src, filename, MARKO_OPTIONS);
       let code = typeof result === "string" ? result : result.code; // Marko 3 does not support sourceOnly: false
-      let map = result.map;
+      let map: any = result.map;
       const deps = browser && result.meta && result.meta.deps;
 
       if (deps && deps.length) {
@@ -105,7 +99,7 @@ export default ({ browser }: { browser: boolean }) => {
             if (dep.virtualPath) {
               const acceptedMatch = acceptPathReg.exec(dep.virtualPath);
               let depCode = dep.code;
-              let depMap = dep.map;
+              let depMap = dep.map as any;
 
               if (!acceptedMatch) {
                 continue;
