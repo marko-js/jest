@@ -1,6 +1,6 @@
 const common = {
   transform: {
-    "\\.ts$": "esbuild-jest",
+    "\\.[cm]?[jt]s$": "babel-jest",
     "\\.css$": "jest-transform-css",
   },
 };

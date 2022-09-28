@@ -29,7 +29,7 @@ test("transforms templates in node_modules", async () => {
   const result = await Project.render({});
   result.appendTo(document.body).getComponent();
   expect(document.body.innerHTML).toMatchInlineSnapshot(
-    `"<div class=\\"direct\\"><div class=\\"indirect\\">Hello World</div></div>"`
+    `"<div class="direct"><div class="indirect">Hello World</div></div>"`
   );
 });
 
@@ -37,7 +37,7 @@ test("includes inline styles in jsdom", async () => {
   const result = await StyledInline.render({});
   result.appendTo(document.body).getComponent();
   expect(document.body.innerHTML).toMatchInlineSnapshot(
-    `"<div class=\\"inline\\">Hello world</div>"`
+    `"<div class="inline">Hello world</div>"`
   );
 
   expect(
@@ -49,7 +49,7 @@ test("includes external styles in jsdom", async () => {
   const result = await StyledExternal.render({});
   result.appendTo(document.body).getComponent();
   expect(document.body.innerHTML).toMatchInlineSnapshot(
-    `"<div class=\\"external\\">Hello world</div>"`
+    `"<div class="external">Hello world</div>"`
   );
 
   expect(
