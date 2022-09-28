@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/marko-js/jest/compare/v4.1.2...v5.0.0) (2022-09-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* drops support for Marko 3
+
+### Features
+
+* use Marko 5 compiler apis if available ([566112d](https://github.com/marko-js/jest/commit/566112db49405c985c0b87abc114270d56ff2936))
+* use Marko's internal caching ([758bf9a](https://github.com/marko-js/jest/commit/758bf9a9c63ee11dcbc80618c2dc4bcce88e4dec))
+
+
+* Merge pull request #22 from marko-js/improve-marko-5-support ([6b66e4d](https://github.com/marko-js/jest/commit/6b66e4d6f85777b611428200a176bc6f128af2e4)), closes [#22](https://github.com/marko-js/jest/issues/22)
+
 ### [4.1.2](https://github.com/marko-js/jest/compare/v4.1.1...v4.1.2) (2022-05-23)
 
 ### [4.1.1](https://github.com/marko-js/jest/compare/v4.1.0...v4.1.1) (2021-12-10)
