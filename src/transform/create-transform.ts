@@ -2,19 +2,20 @@ import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 import { Buffer } from "buffer";
-import compiler from "marko/compiler";
 import mergeMaps from "merge-source-map";
 import ConcatMap from "concat-with-sourcemaps";
 import type { Transformer } from "@jest/transform";
+import { version as markoVersion } from "marko/package.json";
+
+const isMarko4 = /^4\./.test(markoVersion);
+const htmlOutput = "html";
+const domOutput = isMarko4 ? "vdom" : "dom";
+const compiler = isMarko4
+  ? require("marko/compiler")
+  : require("@marko/compiler");
+const taglib = isMarko4 ? compiler.taglibFinder : compiler.taglib;
+const compileSync = isMarko4 ? compiler.compile : compiler.compileSync;
 const THIS_FILE = fs.readFileSync(__filename);
-const MARKO_OPTIONS: Record<string, any> = {
-  writeVersionComment: false,
-  requireTemplates: true,
-  writeToDisk: false,
-  sourceOnly: false,
-  sourceMaps: true,
-  modules: "cjs",
-};
 let configuredGlobals = false;
 
 // Allows for resolving `.marko` files during compilation.
@@ -52,45 +53,49 @@ export default ({ browser }: { browser: boolean }) => {
     },
     process(src, filename, transformOptions) {
       const config = transformOptions.config || transformOptions;
-      const markoConfig = config.globals.marko as any;
-
-      if (!configuredGlobals && markoConfig) {
-        configuredGlobals = true;
-
-        for (const key in markoConfig) {
-          if (key !== "taglib") {
-            MARKO_OPTIONS[key] = markoConfig[key];
+      const globalMarkoConfig = config.globals.marko as any;
+      const output = browser ? domOutput : htmlOutput;
+      const markoConfig: Record<string, any> = isMarko4
+        ? {
+            requireTemplates: true,
+            writeToDisk: false,
+            sourceOnly: false,
+            output,
           }
-        }
+        : {
+            sourceMaps: true,
+            modules: "cjs",
+            output,
+          };
 
-        const taglibConfig = markoConfig.taglib;
-        if (taglibConfig) {
-          const excludeDirs = taglibConfig.excludeDirs;
-          if (excludeDirs) {
-            for (const name of excludeDirs) {
-              compiler.taglibFinder.excludeDir(name);
+      if (globalMarkoConfig) {
+        const { taglib: taglibConfig, ...compilerConfig } = globalMarkoConfig;
+        Object.assign(markoConfig, compilerConfig);
+
+        if (!configuredGlobals) {
+          configuredGlobals = true;
+
+          if (taglibConfig) {
+            const excludeDirs = taglibConfig.excludeDirs;
+            if (excludeDirs) {
+              for (const name of excludeDirs) {
+                taglib.excludeDir(name);
+              }
             }
-          }
 
-          const excludePackages = taglibConfig.excludePackages;
-          if (excludePackages) {
-            for (const name of excludePackages) {
-              compiler.taglibFinder.excludePackage(name);
+            const excludePackages = taglibConfig.excludePackages;
+            if (excludePackages) {
+              for (const name of excludePackages) {
+                taglib.excludePackage(name);
+              }
             }
           }
         }
       }
 
-      const result = compiler[
-        (browser || (config as any).browser) &&
-        compiler.compileForBrowser /** Only Marko 4 supports compileForBrowser, otherwise use compile */
-          ? "compileForBrowser"
-          : "compile"
-      ](src, filename, MARKO_OPTIONS);
-
-      let code = typeof result === "string" ? result : result.code; // Marko 3 does not support sourceOnly: false
-      let map = result.map;
+      const result = compileSync(src, filename, markoConfig);
       const deps = browser && result.meta && result.meta.deps;
+      let { code, map } = result;
 
       if (deps && deps.length) {
         const concatMap = new ConcatMap(true, "", ";");
