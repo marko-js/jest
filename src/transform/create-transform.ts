@@ -1,6 +1,4 @@
 import fs from "fs";
-import path from "path";
-import crypto from "crypto";
 import { Buffer } from "buffer";
 import mergeMaps from "merge-source-map";
 import ConcatMap from "concat-with-sourcemaps";
@@ -15,7 +13,7 @@ const compiler = isMarko4
   : require("@marko/compiler");
 const taglib = isMarko4 ? compiler.taglibFinder : compiler.taglib;
 const compileSync = isMarko4 ? compiler.compile : compiler.compileSync;
-const THIS_FILE = fs.readFileSync(__filename);
+const cache = new Map();
 let configuredGlobals = false;
 
 // Allows for resolving `.marko` files during compilation.
@@ -25,32 +23,6 @@ if (!(".marko" in require.extensions)) {
 
 export default ({ browser }: { browser: boolean }) => {
   const transformer: Transformer = {
-    getCacheKey(
-      sourceText,
-      sourcePath,
-      transformOptions,
-      config = transformOptions.config
-    ) {
-      return crypto
-        .createHash("md5")
-        .setEncoding("utf-8")
-        .update(THIS_FILE)
-        .update("\0")
-        .update(sourceText)
-        .update("\0")
-        .update(path.relative(config.rootDir, sourcePath))
-        .update("\0")
-        .update(
-          transformOptions.instrument || (config as any).instrument
-            ? "instrument"
-            : ""
-        )
-        .update("\0")
-        .update(process.env.NODE_ENV || "")
-        .update("\0")
-        .update(process.env.MARKO_DEBUG || "")
-        .digest("hex");
-    },
     process(src, filename, transformOptions) {
       const config = transformOptions.config || transformOptions;
       const globalMarkoConfig = config.globals.marko as any;
@@ -63,9 +35,11 @@ export default ({ browser }: { browser: boolean }) => {
             output,
           }
         : {
+            fileSystem: createVirtualFS(transformOptions.cacheFS),
             sourceMaps: true,
             modules: "cjs",
             output,
+            cache,
           };
 
       if (globalMarkoConfig) {
@@ -166,3 +140,20 @@ export default ({ browser }: { browser: boolean }) => {
 
   return transformer;
 };
+
+function createVirtualFS(map: Map<string, string> | undefined) {
+  if (!map) return fs;
+
+  return {
+    ...fs,
+    readFileSync(...args: Parameters<typeof fs["readFileSync"]>) {
+      const path = args[0] as any;
+      const source = map.get(path);
+      if (source !== undefined) {
+        return source;
+      }
+
+      return fs.readFileSync(...args);
+    },
+  };
+}
