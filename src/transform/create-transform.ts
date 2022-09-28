@@ -1,5 +1,4 @@
 import fs from "fs";
-import { Buffer } from "buffer";
 import mergeMaps from "merge-source-map";
 import ConcatMap from "concat-with-sourcemaps";
 import type { Transformer } from "@jest/transform";
@@ -128,13 +127,7 @@ export default ({ browser }: { browser: boolean }) => {
         map = concatMap.sourceMap;
       }
 
-      if (map) {
-        code += `\n//# sourceMappingURL=data:application/json;base64,${Buffer.from(
-          typeof map === "string" ? map : JSON.stringify(map)
-        ).toString("base64")}`;
-      }
-
-      return { code };
+      return { code, map: map && JSON.stringify(map) };
     },
   };
 
