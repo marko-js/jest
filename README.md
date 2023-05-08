@@ -66,7 +66,7 @@ The above is roughly equivalent to:
 const { defaults } = require("jest-config");
 
 module.exports = {
-  // uses a webpack style resolver
+  // uses a webpack style resolver for older versions of Marko
   resolver: "...",
   // allows for stuff like file watching of `.marko` files
   moduleFileExtensions: defaults.moduleFileExtensions.concat("marko"),
@@ -175,7 +175,7 @@ To have Marko include a `style.css` file you could add [jest-transform-css](http
 
 ## Why override the resolver (enhanced-resolve-jest)?
 
-The default jest resolver does actually work fine with Marko when running server side tests, however in the browser they rely on [browser-resolve](https://github.com/shtylman/node-browser-resolve#readme). The browser resolver then relies on a version of [resolve](https://github.com/browserify/resolve) which is over three years old and has had many fixes since.
+The default jest resolver does actually work fine with Marko when running server side tests, however in the browser they rely on [browser-resolve](https://github.com/shtylman/node-browser-resolve#readme). The browser resolver then relies on a version of [resolve](https://github.com/browserify/resolve) which is over three years old and has had many fixes since. Newer versions of Marko have been updated to avoid these issues, but `@marko/jest` will override the resolver if a version of Marko older than `5.25.12` is used.
 
 On top of the issues from using this outdated module, there are a number of limitations. Below i've outlined some issues and limitations you might come across because of this dependency used by jest, one of which completely stops Marko's browser modules from being resolved correctly, hence the recommendation here.
 
