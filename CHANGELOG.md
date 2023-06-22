@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.0](https://github.com/marko-js/jest/compare/v5.0.0...v5.1.0) (2023-06-22)
+
+
+### Features
+
+* avoid custom resolver for newer Marko 4 versions ([7fd3fb8](https://github.com/marko-js/jest/commit/7fd3fb8e560c40d15c86f5f0ab2b43492648067e))
+
+
+### Bug Fixes
+
+* avoid overriding jest resolver when possible ([3018c43](https://github.com/marko-js/jest/commit/3018c4302d1b29533e7c8d79f3bc673a44f43935))
+
 ## [5.0.0](https://github.com/marko-js/jest/compare/v4.1.2...v5.0.0) (2022-09-28)
 
 
