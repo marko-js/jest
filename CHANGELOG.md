@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.1](https://github.com/marko-js/jest/compare/v5.1.0...v5.1.1) (2023-08-10)
+
+
+### Bug Fixes
+
+* forward browser option to Marko 4 compiler ([0d21393](https://github.com/marko-js/jest/commit/0d21393fb1d6fff71c8618df468dfebfe4bffc0a))
+
 ## [5.1.0](https://github.com/marko-js/jest/compare/v5.0.0...v5.1.0) (2023-06-22)
 
 
