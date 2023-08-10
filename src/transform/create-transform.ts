@@ -31,6 +31,7 @@ export default ({ browser }: { browser: boolean }) => {
             requireTemplates: true,
             writeToDisk: false,
             sourceOnly: false,
+            browser,
             output,
           }
         : {
