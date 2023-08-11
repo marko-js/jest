@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.2.0](https://github.com/marko-js/jest/compare/v5.1.2...v5.2.0) (2023-08-11)
+
+
+### Features
+
+* support registering global taglibs from jest config ([bfdda6c](https://github.com/marko-js/jest/commit/bfdda6c51f1fc44a573ba487b54f3b777f85ede3))
+
 ### [5.1.2](https://github.com/marko-js/jest/compare/v5.1.1...v5.1.2) (2023-08-11)
 
 
