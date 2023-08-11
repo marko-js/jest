@@ -79,6 +79,8 @@ export default ({ browser }: { browser: boolean }) => {
             .join("|")}|\\.(?:${config.moduleFileExtensions.join("|")})))$`
         );
 
+        concatMap.add(filename, code, map);
+
         for (let dep of deps) {
           if (typeof dep !== "string") {
             if (dep.virtualPath) {
@@ -92,10 +94,22 @@ export default ({ browser }: { browser: boolean }) => {
 
               for (const key in acceptedMatch.groups) {
                 if (acceptedMatch.groups[key] !== undefined) {
+                  const [, nestedTransformerPath, nestedTransformerOpts] =
+                    config.transform[parseInt(key.slice(1), 10)];
                   // eslint-disable-next-line @typescript-eslint/no-var-requires
-                  const transformResult = require(config.transform[
-                    parseInt(key.slice(1), 10)
-                  ][1]).process(depCode, dep.virtualPath, transformOptions);
+                  const nestedTransformerModule = require(nestedTransformerPath);
+                  const nestedTransformer =
+                    nestedTransformerModule.createTransformer
+                      ? nestedTransformerModule.createTransformer(
+                          nestedTransformerOpts
+                        )
+                      : nestedTransformerModule;
+                  const transformResult = nestedTransformer.process
+                    ? nestedTransformer.process(depCode, dep.virtualPath, {
+                        ...transformOptions,
+                        ...nestedTransformerOpts,
+                      })
+                    : dep.code;
 
                   if (typeof transformResult === "object") {
                     depCode = transformResult.code;
@@ -109,9 +123,9 @@ export default ({ browser }: { browser: boolean }) => {
                 }
               }
 
-              concatMap.add(null, `((module, exports) => {`);
+              concatMap.add(null, `\n;((module, exports) => {`);
               concatMap.add(dep.virtualPath, depCode, depMap);
-              concatMap.add(null, `})({ exports: {} })`);
+              concatMap.add(null, `\n})({ exports: {} })`);
               continue;
             } else {
               dep = dep.path;
@@ -119,11 +133,10 @@ export default ({ browser }: { browser: boolean }) => {
           }
 
           if (acceptPathReg.test(dep)) {
-            concatMap.add(null, `require(${JSON.stringify(dep)})`);
+            concatMap.add(null, `\n;require(${JSON.stringify(dep)})`);
           }
         }
 
-        concatMap.add(filename, code, map);
         code = concatMap.content.toString("utf-8");
         map = concatMap.sourceMap;
       }
