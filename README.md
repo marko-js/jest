@@ -108,7 +108,7 @@ module.exports = {
 ## Customizing the Marko compiler
 
 You can override the default [Marko compiler options](https://markojs.com/docs/compiler/#options) by adding a Jest "globals" config with a `marko` property.
-An additional `taglib` property can be set which supports an `excludeDirs` and `excludePackages` array which will prevent Marko from discovering taglibs in a directory or package respectively.
+An additional `taglib` property can be set which supports `excludeDirs` and `excludePackages` arrays which will prevent Marko from discovering taglibs in a directory or package respectively. You can also specify a `register` array on this object which will cause a taglib to be registered unconditionally for every template.
 
 **jest.config.js**
 
@@ -119,6 +119,7 @@ module.exports = {
     marko: {
       ignoreUnrecognizedTags: true,
       taglib: {
+        register: ["@marko/compat-v4"],
         excludePackages: ["@scope/package-name"],
       },
     },

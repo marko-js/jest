@@ -63,6 +63,17 @@ export default ({ browser }: { browser: boolean }) => {
                 taglib.excludePackage(name);
               }
             }
+
+            const register = taglibConfig.register;
+            if (register) {
+              for (const name of register) {
+                if (typeof name === "string") {
+                  taglib.register(name);
+                } else if (Array.isArray(name) && name.length === 2) {
+                  taglib.register(name[0], name[1]);
+                }
+              }
+            }
           }
         }
       }
