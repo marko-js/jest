@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.2.2](https://github.com/marko-js/jest/compare/v5.2.1...v5.2.2) (2023-10-09)
+
+
+### Bug Fixes
+
+* ensure virtual file paths are resolved ([417708e](https://github.com/marko-js/jest/commit/417708ef800dcba81c2a55e847198d2719fb0f4b))
+
 ### [5.2.1](https://github.com/marko-js/jest/compare/v5.2.0...v5.2.1) (2023-10-09)
 
 
