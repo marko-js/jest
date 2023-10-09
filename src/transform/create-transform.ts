@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path";
 import mergeMaps from "merge-source-map";
 import ConcatMap from "concat-with-sourcemaps";
 import type { Transformer } from "@jest/transform";
@@ -95,7 +96,11 @@ export default ({ browser }: { browser: boolean }) => {
         for (let dep of deps) {
           if (typeof dep !== "string") {
             if (dep.virtualPath) {
-              const acceptedMatch = acceptPathReg.exec(dep.virtualPath);
+              const resolvedVirtualPath = path.resolve(
+                filename,
+                dep.virtualPath
+              );
+              const acceptedMatch = acceptPathReg.exec(resolvedVirtualPath);
               let depCode = dep.code;
               let depMap = dep.map;
 
@@ -116,7 +121,7 @@ export default ({ browser }: { browser: boolean }) => {
                         )
                       : nestedTransformerModule;
                   const transformResult = nestedTransformer.process
-                    ? nestedTransformer.process(depCode, dep.virtualPath, {
+                    ? nestedTransformer.process(depCode, resolvedVirtualPath, {
                         ...transformOptions,
                         ...nestedTransformerOpts,
                       })
@@ -135,7 +140,7 @@ export default ({ browser }: { browser: boolean }) => {
               }
 
               concatMap.add(null, `\n;((module, exports) => {`);
-              concatMap.add(dep.virtualPath, depCode, depMap);
+              concatMap.add(resolvedVirtualPath, depCode, depMap);
               concatMap.add(null, `\n})({ exports: {} })`);
               continue;
             } else {
