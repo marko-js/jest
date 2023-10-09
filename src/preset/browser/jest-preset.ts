@@ -13,10 +13,21 @@ export = {
 };
 
 function needsResolver() {
-  const version = getVersion("@marko/compiler") || getVersion("marko");
-  if (!version) return false;
+  const jestVersion = getVersion("jest");
 
-  const parts = version.split(".");
+  // Jest 29+ has a built in resolver that works fine with newer
+  // versions of Marko. Older versions of jest always require a custom resolver.
+  if (
+    jestVersion &&
+    parseInt(jestVersion.slice(0, jestVersion.indexOf(".")), 10) < 29
+  ) {
+    return true;
+  }
+
+  const markoVersion = getVersion("@marko/compiler") || getVersion("marko");
+  if (!markoVersion) return false;
+
+  const parts = markoVersion.split(".");
   const major = parseInt(parts[0], 10);
   const minor = parseInt(parts[1], 10);
   const patch = parseInt(parts[2], 10);
