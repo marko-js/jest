@@ -84,7 +84,7 @@ export default ({ browser }: { browser: boolean }) => {
       let { code, map } = result;
 
       if (deps && deps.length) {
-        const concatMap = new ConcatMap(true, "", ";");
+        const concatMap = new ConcatMap(true, filename, ";");
         const acceptPathReg = new RegExp(
           `^(?:[./]*[^:.]*|[^:]+(?:${config.transform
             .map(([reg], i) => `(?<_${i}>${reg})`)
@@ -129,7 +129,7 @@ export default ({ browser }: { browser: boolean }) => {
 
                   if (typeof transformResult === "object") {
                     depCode = transformResult.code;
-                    depMap = depMap
+                    depMap = depMap && transformResult.map
                       ? mergeMaps(depMap, transformResult.map)
                       : undefined;
                   } else {
@@ -154,10 +154,10 @@ export default ({ browser }: { browser: boolean }) => {
         }
 
         code = concatMap.content.toString("utf-8");
-        map = concatMap.sourceMap;
+        map = (concatMap as any)._sourceMap?.toJSON?.() || JSON.parse(concatMap.sourceMap || "null");
       }
 
-      return { code, map: map && JSON.stringify(map) };
+      return { code, map };
     },
   };
 
