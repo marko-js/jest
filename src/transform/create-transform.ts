@@ -37,10 +37,24 @@ export default ({ browser }: { browser: boolean }) => {
           }
         : {
             fileSystem: createVirtualFS(transformOptions.cacheFS),
+            writeVersionComment: false,
             sourceMaps: true,
             modules: "cjs",
             output,
             cache,
+            babelConfig: {
+              compact: false,
+              comments: false,
+              babelrc: false,
+              configFile: false,
+              browserslistConfigFile: false,
+              caller: {
+                name: "@marko/jest",
+                supportsStaticESM: true,
+                supportsDynamicImport: true,
+                supportsTopLevelAwait: true,
+              }
+            }
           };
 
       if (globalMarkoConfig) {
