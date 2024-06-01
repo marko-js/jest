@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0](https://github.com/marko-js/jest/compare/v5.2.3...v6.0.0) (2024-06-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* This change disables loading user babel config by default, you can still run the jest-babel
+transform manually on Marko files.
+
+### Features
+
+* disable loading user babel config ([cd8387a](https://github.com/marko-js/jest/commit/cd8387a0d126780d33216f528247d3424fa27025))
+
 ### [5.2.3](https://github.com/marko-js/jest/compare/v5.2.2...v5.2.3) (2023-10-18)
 
 
