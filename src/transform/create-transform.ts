@@ -53,8 +53,8 @@ export default ({ browser }: { browser: boolean }) => {
                 supportsStaticESM: true,
                 supportsDynamicImport: true,
                 supportsTopLevelAwait: true,
-              }
-            }
+              },
+            },
           };
 
       if (globalMarkoConfig) {
@@ -102,7 +102,7 @@ export default ({ browser }: { browser: boolean }) => {
         const acceptPathReg = new RegExp(
           `^(?:[./]*[^:.]*|[^:]+(?:${config.transform
             .map(([reg], i) => `(?<_${i}>${reg})`)
-            .join("|")}|\\.(?:${config.moduleFileExtensions.join("|")})))$`
+            .join("|")}|\\.(?:${config.moduleFileExtensions.join("|")})))$`,
         );
 
         concatMap.add(filename, code, map);
@@ -112,7 +112,7 @@ export default ({ browser }: { browser: boolean }) => {
             if (dep.virtualPath) {
               const resolvedVirtualPath = path.resolve(
                 filename,
-                dep.virtualPath
+                dep.virtualPath,
               );
               const acceptedMatch = acceptPathReg.exec(resolvedVirtualPath);
               let depCode = dep.code;
@@ -127,11 +127,13 @@ export default ({ browser }: { browser: boolean }) => {
                   const [, nestedTransformerPath, nestedTransformerOpts] =
                     config.transform[parseInt(key.slice(1), 10)];
                   // eslint-disable-next-line @typescript-eslint/no-var-requires
-                  const nestedTransformerModule = require(nestedTransformerPath);
+                  const nestedTransformerModule = require(
+                    nestedTransformerPath,
+                  );
                   const nestedTransformer =
                     nestedTransformerModule.createTransformer
                       ? nestedTransformerModule.createTransformer(
-                          nestedTransformerOpts
+                          nestedTransformerOpts,
                         )
                       : nestedTransformerModule;
                   const transformResult = nestedTransformer.process
@@ -143,9 +145,10 @@ export default ({ browser }: { browser: boolean }) => {
 
                   if (typeof transformResult === "object") {
                     depCode = transformResult.code;
-                    depMap = depMap && transformResult.map
-                      ? mergeMaps(depMap, transformResult.map)
-                      : undefined;
+                    depMap =
+                      depMap && transformResult.map
+                        ? mergeMaps(depMap, transformResult.map)
+                        : undefined;
                   } else {
                     depCode = transformResult;
                     depMap = undefined;
@@ -168,7 +171,9 @@ export default ({ browser }: { browser: boolean }) => {
         }
 
         code = concatMap.content.toString("utf-8");
-        map = (concatMap as any)._sourceMap?.toJSON?.() || JSON.parse(concatMap.sourceMap || "null");
+        map =
+          (concatMap as any)._sourceMap?.toJSON?.() ||
+          JSON.parse(concatMap.sourceMap || "null");
       }
 
       return { code, map };
@@ -183,7 +188,7 @@ function createVirtualFS(map: Map<string, string> | undefined) {
 
   return {
     ...fs,
-    readFileSync(...args: Parameters<typeof fs["readFileSync"]>) {
+    readFileSync(...args: Parameters<(typeof fs)["readFileSync"]>) {
       const path = args[0] as any;
       const source = map.get(path);
       if (source !== undefined) {

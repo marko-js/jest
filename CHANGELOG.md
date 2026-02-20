@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.1](https://github.com/marko-js/jest/compare/v6.0.0...v6.0.1) (2026-02-20)
+
 ## [6.0.0](https://github.com/marko-js/jest/compare/v5.2.3...v6.0.0) (2024-06-01)
 
 
