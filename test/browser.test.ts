@@ -12,7 +12,7 @@ test("works in the browser", async () => {
   const result = await Example.render({});
   result.appendTo(document.body).getComponent();
   expect(document.body.innerHTML).toMatchInlineSnapshot(
-    `"<div>Hello World</div>"`
+    `"<div>Hello World</div>"`,
   );
 });
 
@@ -21,7 +21,7 @@ test("can be mocked", async () => {
   const result = await Mockable.render({});
   result.appendTo(document.body).getComponent();
   expect(document.body.innerHTML).toMatchInlineSnapshot(
-    `"<div>Hello Mocked</div>"`
+    `"<div>Hello Mocked</div>"`,
   );
 });
 
@@ -29,7 +29,7 @@ test("transforms templates in node_modules", async () => {
   const result = await Project.render({});
   result.appendTo(document.body).getComponent();
   expect(document.body.innerHTML).toMatchInlineSnapshot(
-    `"<div class="direct"><div class="indirect">Hello World</div></div>"`
+    `"<div class="direct"><div class="indirect">Hello World</div></div>"`,
   );
 });
 
@@ -37,22 +37,22 @@ test("includes inline styles in jsdom", async () => {
   const result = await StyledInline.render({});
   result.appendTo(document.body).getComponent();
   expect(document.body.innerHTML).toMatchInlineSnapshot(
-    `"<div class="inline">Hello world</div>"`
+    `"<div class="inline">Hello world</div>"`,
   );
 
   expect(
-    getComputedStyle(document.body.firstElementChild!).color
-  ).toMatchInlineSnapshot(`"green"`);
+    getComputedStyle(document.body.firstElementChild!).color,
+  ).toMatchInlineSnapshot(`"rgb(0, 128, 0)"`);
 });
 
 test("includes external styles in jsdom", async () => {
   const result = await StyledExternal.render({});
   result.appendTo(document.body).getComponent();
   expect(document.body.innerHTML).toMatchInlineSnapshot(
-    `"<div class="external">Hello world</div>"`
+    `"<div class="external">Hello world</div>"`,
   );
 
   expect(
-    getComputedStyle(document.body.firstElementChild!).color
-  ).toMatchInlineSnapshot(`"blue"`);
+    getComputedStyle(document.body.firstElementChild!).color,
+  ).toMatchInlineSnapshot(`"rgb(0, 0, 255)"`);
 });
